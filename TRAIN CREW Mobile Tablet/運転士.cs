@@ -22,14 +22,16 @@ namespace test
 {
     public partial class M : Form
     {
+        ControlScaler scaler;
 
         int time = 0;
         public M()
         {
             InitializeComponent();
             this.AcceptButton = button4;
-            this.MaximumSize = this.Size;
-            this.MinimumSize = this.Size;
+            scaler = new ControlScaler();
+            scaler.CaptureInitialState(this);
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,6 +40,7 @@ namespace test
             {
                 this.TopMost = true;
                 button1.BackColor = Color.Yellow;
+                var abc = "　";
             }
             else
             {
@@ -391,9 +394,9 @@ namespace test
             if (form5Instance == null || form5Instance.IsDisposed)
             {
                 DigitalStaff form = new DigitalStaff();
-                form.LoadStaff(comboBox3.SelectedItem.ToString());
+                form.LoadStaff("1182C");
                 form.Show();
-               // form5Instance.Show();
+                // form5Instance.Show();
                 button8.BackColor = Color.LightGreen;
                 return;
             }
@@ -420,6 +423,11 @@ namespace test
             {
                 form4Instance.Close();
             }
+        }
+
+        private void M_Resize(object sender, EventArgs e)
+        {
+            scaler?.ScaleToCurrentSize(this, controlScalerProvider1);
         }
     }
 }
